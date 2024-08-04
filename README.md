@@ -14,10 +14,10 @@
 
 ### Основано на:
 
-https://github.com/GubernievS/AntiZapret-VPN-Container
-https://bitbucket.org/anticensority/antizapret-vpn-container
-https://bitbucket.org/anticensority/antizapret-pac-generator-light
-https://github.com/Limych/antizapret/
+- https://github.com/GubernievS/AntiZapret-VPN-Container
+- https://bitbucket.org/anticensority/antizapret-vpn-container
+- https://bitbucket.org/anticensority/antizapret-pac-generator-light
+- https://github.com/Limych/antizapret/
 
 ### Зависимости
 
