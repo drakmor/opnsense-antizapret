@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# PROVIDE: dnsproxy
+# REQUIRE: NETWORKING
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name="dnsproxy"
+rcvar="dnsproxy_enable"
+
+load_rc_config $name
+
+: ${dnsproxy_enable:="NO"}
+: ${dnsproxy_address:="127.0.0.4"}
+: ${dnsproxy_port:="53"}
+: ${dnsproxy_upstream:="8.8.8.8:53"}
+: ${dnsproxy_timeout:="5"}
+: ${dnsproxy_log:="request,reply,truncated,error"}
+: ${dnsproxy_log_prefix:="NO"}
+
+pidfile="/var/run/${name}.pid"
+command="/root/antizapret/dns_proxy.py"
+command_args="-a ${dnsproxy_address} -p ${dnsproxy_port} -u ${dnsproxy_upstream} -o ${dnsproxy_timeout} --log ${dnsproxy_log}"
+
+if [ "${dnsproxy_log_prefix}" = "YES" ]; then
+    command_args="${command_args} --log-prefix"
+fi
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+
+dnsproxy_start() {
+    echo "Starting DNS Proxy on ${dnsproxy_address}:${dnsproxy_port}..."
+    /usr/sbin/daemon -p ${pidfile} ${command} ${command_args}
+}
+
+dnsproxy_stop() {
+    echo "Stopping DNS Proxy..."
+    kill `cat ${pidfile}`
+}
+
+run_rc_command "$1"
+
